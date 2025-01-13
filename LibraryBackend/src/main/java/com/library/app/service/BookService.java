@@ -11,5 +11,15 @@ public interface BookService {
 
     List<BookDTO> getAllBooks();
 
-    BookDTO getBookById (Long bookId);
+    BookDTO getBookById(Long bookId);
+
+    BookDTO updateBook(BookDTO bookDTO);
+
+    void deleteBook(Long bookId);
+
+    List<BookDTO> findBooksByTitle(String title);
+
+    List<BookDTO> findBooksByTitleAndAuthor(String title, String author);
+
+    List<BookDTO> findBooksByCriteria(String title, String author, String isbn,String barcodeNumber);
 }

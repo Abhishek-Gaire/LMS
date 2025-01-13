@@ -40,4 +40,52 @@ public class BookController {
         BookDTO bookDTO = bookService.getBookById(bookId);
         return new ResponseEntity<>(bookDTO, HttpStatus.OK);
     }
+
+    @PatchMapping("updateBook/{id}")
+    //http://localhost:8080/api/books/updateBook/1
+    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO){
+
+        bookDTO.setId(id);
+        BookDTO updatedBook = bookService.updateBook(bookDTO);
+
+        return new ResponseEntity<>(updatedBook,HttpStatus.OK);
+    }
+
+    @DeleteMapping("deleteBook/{id}")
+    //http://localhost:8080/api/books/deleteBook/3
+    public ResponseEntity<String> deleteBook(@PathVariable Long id){
+        bookService.deleteBook(id);
+        return new ResponseEntity<>("Book Successfully Deleted", HttpStatus.OK);
+    }
+
+    @GetMapping("search-title")
+    //http://localhost:8080/api/books/search-title?title=Lord of The Rings
+
+    public ResponseEntity<List<BookDTO>> searchBookByTitle(@RequestParam String title){
+        List<BookDTO> books = bookService.findBooksByTitle(title);
+
+        return new ResponseEntity<>(books,HttpStatus.OK);
+    }
+
+    @GetMapping("search-title-author")
+    //http://localhost:8080/api/books/search-title-author?title=Lord&author=tolk
+
+    public ResponseEntity<List<BookDTO>> searchBookByTitleAndAuthor(@RequestParam String title,@RequestParam String author){
+        List<BookDTO> books = bookService.findBooksByTitleAndAuthor(title,author);
+
+        return new ResponseEntity<>(books,HttpStatus.OK);
+    }
+
+    @GetMapping("search")
+    // http:localhost:8080/api/books/search?title=lord&author=tolk
+    public ResponseEntity<List<BookDTO>> searchBooks(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String isbn,
+            @RequestParam(required = false) String barcodeNumber){
+        List<BookDTO> books = bookService.findBooksByCriteria(title,author,isbn,barcodeNumber);
+
+        return new ResponseEntity<>(books,HttpStatus.OK);
+    }
+
 }
