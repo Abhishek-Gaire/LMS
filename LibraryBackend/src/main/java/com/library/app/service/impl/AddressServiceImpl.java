@@ -63,7 +63,7 @@ public class AddressServiceImpl implements AddressService {
         addressRepository.deleteById(id);
     }
 
-    private void updateAddressEntityFromDTO(PostalAddress addressToUpdate, AddressDTO addressDTO) {
+    public void updateAddressEntityFromDTO(PostalAddress addressToUpdate, AddressDTO addressDTO) {
         if(addressDTO.getCountry() != null){
             addressToUpdate.setCountry(addressDTO.getCountry());
         }
